@@ -26,6 +26,7 @@ namespace SDQ
         /// <returns></returns>
         public static int[] ExtractAnswers(string raw)
         {
+            Console.WriteLine(raw.Split('\n')[2].Split('\t').Aggregate("answers:", (box, it) => $"{box}\n{it}"));
             return raw.Split('\n')[2].Split('\t')
                       .Where(it => it.Length > 0)
                       .Select(it => int.Parse(it))

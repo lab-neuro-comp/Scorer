@@ -16,9 +16,20 @@ namespace Toolkit
 
         public static bool HaveSameEndings(string s, string t)
         {
-            return (s.Length > t.Length) ?
-                s.Reverse().ToString().StartsWith(t.Reverse().ToString()) :
-                t.Reverse().ToString().StartsWith(s.Reverse().ToString());
+            int sl = s.Length;
+            int tl = t.Length;
+            int limit = (sl < tl) ? sl : tl;
+            bool flag = true;
+
+            for (int i = 0; i < limit; ++i)
+            {
+                if (s[sl-i-1] != t[tl-i-1])
+                {
+                    flag = false;
+                }
+            }
+
+            return flag;
         }
 
         public static string LoadFile(string filename)
