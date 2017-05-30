@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Toolkit
 {
@@ -51,6 +47,41 @@ namespace Toolkit
         public static string LoadFile(string filename)
         {
             return (File.Exists(filename))? File.ReadAllText(filename) : null;
+        }
+
+        /// <summary>
+        /// Groups a list of files into similar test executions.
+        /// </summary>
+        /// <param name="testType">The test to look for.</param>
+        /// <returns>An array as each item is an array of the test executions
+        /// of the same test by the same subject.</returns>
+        public static string[][] GroupFilesByTest(string[] files, string testType)
+        {
+            Dictionary<string, List<string>> groupings = new Dictionary<string, List<string>>();
+            List<string[]> outlet = new List<string[]>();
+
+            // Populating groupings by subject
+            foreach (var file in files)
+            {
+                var subject = file.Split('_')[0];
+                var test = file.Split('_')[1];
+                if (test.StartsWith(testType))
+                {
+                    if (!groupings.ContainsKey(subject))
+                    {
+                        groupings[subject] = new List<string>();
+                    }
+                    groupings[subject].Add(file);
+                }
+            }
+
+            // Making abstract groupings more sparse
+            foreach (var subjects in groupings.Keys)
+            {
+                outlet.Add(groupings[subjects].ToArray());
+            }
+
+            return outlet.ToArray();
         }
     }
 }

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Linq;
 
 namespace SDQ
 {
@@ -26,7 +22,6 @@ namespace SDQ
         /// <returns></returns>
         public static int[] ExtractAnswers(string raw)
         {
-            Console.WriteLine(raw.Split('\n')[2].Split('\t').Aggregate("answers:", (box, it) => $"{box}\n{it}"));
             return raw.Split('\n')[2].Split('\t')
                       .Where(it => it.Length > 0)
                       .Select(it => int.Parse(it))
@@ -42,7 +37,18 @@ namespace SDQ
         public void Read(string raw)
         {
             Text = raw;
-            Answers = ExtractAnswers(Text);
+            Part1Answers = ExtractAnswers(Text);
+        }
+
+        /// <summary>
+        /// Extracts the needed information from the raw Scalemate table text.
+        /// </summary>
+        /// <param name="part1">The text in the first output Scalemate table in a string.</param>
+        /// <param name="part2">The text in the second output Scalemate table in a string.</param>
+        public void Read(string part1, string part2)
+        {
+            Read(part1);
+            Part2Answers = ExtractAnswers(part2);
         }
         #endregion
 
@@ -52,9 +58,13 @@ namespace SDQ
         /// </summary>
         public string Text { get; private set; }
         /// <summary>
-        /// The answers, as given by the subject.
+        /// The answers, as given by the subject, in the first part.
         /// </summary>
-        public int[] Answers { get; private set; }
+        public int[] Part1Answers { get; private set; }
+        /// <summary>
+        /// The answers, as given by the subject, in the second part.
+        /// </summary>
+        public int[] Part2Answers { get; private set; }
         #endregion
     }
 }

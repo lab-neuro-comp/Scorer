@@ -1,12 +1,7 @@
 ﻿using NUnit.Framework;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Testing
-{ 
+{
     [TestFixture]
     public class TestingSDQ
     {
@@ -59,8 +54,42 @@ namespace Testing
                     var text = Toolkit.DataAccessLayer.LoadFile(file);
                     var evaluator = new SDQ.Evaluator();
                     evaluator.Read(text);
-                    Assert.AreEqual('Y' - 'A' + 1, evaluator.Answers.Length);
+                    Assert.AreEqual(25, evaluator.Part1Answers.Length);
                 }
+            }
+        }
+
+        [Test]
+        public void TestFileGroupingsByTestType()
+        {
+            string[] files = Toolkit.DataAccessLayer.AllFiles(TestingSDQ.GetDirectory());
+            string[][] groupings = Toolkit.DataAccessLayer.GroupFilesByTest(files, "sdq");
+            foreach (var grouping in groupings)
+            {
+                Assert.AreEqual(2, grouping.Length);
+            }
+            groupings = Toolkit.DataAccessLayer.GroupFilesByTest(files, "snap");
+            foreach (var grouping in groupings)
+            {
+                Assert.AreEqual(2, grouping.Length);
+            }
+        }
+
+        [Test]
+        public void TestSdqExecutionProcessing()
+        {
+            string[] files = Toolkit.DataAccessLayer.AllFiles(TestingSDQ.GetDirectory());
+            string[][] groupings = Toolkit.DataAccessLayer.GroupFilesByTest(files, "sdq");
+            foreach (var grouping in groupings)
+            {
+                var evaluator = new SDQ.Evaluator();
+                evaluator.Read(grouping[0]);
+                if (grouping.Length > 1)
+                {
+                    evaluator.Read(grouping[1]);
+                }
+                // TODO Evaluate test execution to provide a test case here
+                Assert.IsTrue(false);
             }
         }
     }
