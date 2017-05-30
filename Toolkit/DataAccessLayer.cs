@@ -13,5 +13,17 @@ namespace Toolkit
         {
             return Directory.GetFiles(src);
         }
+
+        public static bool HaveSameEndings(string s, string t)
+        {
+            return (s.Length > t.Length) ?
+                s.Reverse().ToString().StartsWith(t.Reverse().ToString()) :
+                t.Reverse().ToString().StartsWith(s.Reverse().ToString());
+        }
+
+        public static string LoadFile(string filename)
+        {
+            return (File.Exists(filename))? File.ReadAllText(filename) : null;
+        }
     }
 }
