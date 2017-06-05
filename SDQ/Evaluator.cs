@@ -68,88 +68,22 @@ namespace SDQ
 
             // Total results
             int total = groupsOfAnswers[0];
-            if (total >= 0 && total <= 15)
-            {
-                results.Add(0);
-            }
-            else if (total >= 16 && total <= 19)
-            {
-                results.Add(1);
-            }
-            else
-            {
-                results.Add(2);
-            }
+            results.Add((total >= 0 && total <= 15) ? 0 : (total >= 16 && total <= 19) ? 1 : 2 );
             // Emotional symptoms
             total = groupsOfAnswers[1];
-            if (total >= 0 && total <= 5)
-            {
-                results.Add(0);
-            }
-            else if (total >= 6 && total <= 6)
-            {
-                results.Add(1);
-            }
-            else
-            {
-                results.Add(2);
-            }
+            results.Add((total >= 0 && total <= 5) ? 0 : (total >= 6 && total <= 6) ? 1 : 2);
             // Behaviour problems
             total = groupsOfAnswers[2];
-            if (total >= 0 && total <= 3)
-            {
-                results.Add(0);
-            }
-            else if (total >= 4 && total <= 4)
-            {
-                results.Add(1);
-            }
-            else
-            {
-                results.Add(2);
-            }
+            results.Add((total >= 0 && total <= 3) ? 0 : (total >= 4 && total <= 4) ? 1 : 2);
             // Hyperactivity
             total = groupsOfAnswers[3];
-            if (total >= 0 && total <= 5)
-            {
-                results.Add(0);
-            }
-            else if (total >= 6 && total <= 9)
-            {
-                results.Add(1);
-            }
-            else
-            {
-                results.Add(2);
-            }
+            results.Add((total >= 0 && total <= 5) ? 0 : (total >= 6 && total <= 9) ? 1 : 2);
             // Relationship problems
             total = groupsOfAnswers[4];
-            if (total >= 0 && total <= 3)
-            {
-                results.Add(0);
-            }
-            else if (total >= 4 && total <= 5)
-            {
-                results.Add(1);
-            }
-            else
-            {
-                results.Add(2);
-            }
+            results.Add((total >= 0 && total <= 3) ? 0 : (total >= 4 && total <= 5) ? 1 : 2);
             // Prosocial behaviour
             total = groupsOfAnswers[0];
-            if (total >= 6 && total <= 10)
-            {
-                results.Add(0);
-            }
-            else if (total >= 5 && total <= 5)
-            {
-                results.Add(1);
-            }
-            else
-            {
-                results.Add(2);
-            }
+            results.Add((total >= 6 && total <= 10) ? 0 : (total >= 5 && total <= 5) ? 1 : 2);
 
             return results.ToArray();
         }
