@@ -82,7 +82,7 @@ namespace SDQ
             total = groupsOfAnswers[4];
             results.Add((total >= 0 && total <= 3) ? 0 : (total >= 4 && total <= 5) ? 1 : 2);
             // Prosocial behaviour
-            total = groupsOfAnswers[0];
+            total = groupsOfAnswers[5];
             results.Add((total >= 6 && total <= 10) ? 0 : (total >= 5 && total <= 5) ? 1 : 2);
 
             return results.ToArray();

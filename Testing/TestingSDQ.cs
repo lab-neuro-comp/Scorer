@@ -16,7 +16,7 @@ namespace Testing
         {
             string directory = TestingSDQ.GetDirectory();
             string[] files = Toolkit.DataAccessLayer.AllFiles(directory);
-            Assert.AreEqual(4, files.Length);
+            Assert.AreEqual(6, files.Length);
         }
 
         [Test]
@@ -24,8 +24,8 @@ namespace Testing
         {
             var sdqEnding = "sdq-1.csv";
             string[] files = Toolkit.DataAccessLayer.AllFiles(TestingSDQ.GetDirectory());
-            Assert.IsTrue(Toolkit.DataAccessLayer.HaveSameEndings(sdqEnding, files[0]));
-            Assert.IsTrue(Toolkit.DataAccessLayer.HaveSameEndings(files[0], sdqEnding));
+            Assert.IsTrue(Toolkit.DataAccessLayer.HaveSameEndings(sdqEnding, files[1]));
+            Assert.IsTrue(Toolkit.DataAccessLayer.HaveSameEndings(files[1], sdqEnding));
         }
         
         [Test]
@@ -64,12 +64,12 @@ namespace Testing
         public void TestFileGroupingsByTestType()
         {
             string[] files = Toolkit.DataAccessLayer.AllFiles(TestingSDQ.GetDirectory());
-            string[][] groupings = Toolkit.DataAccessLayer.GroupFilesByTest(files, "sdq");
+            string[][] groupings = Toolkit.DataAccessLayer.GroupFilesByTest(files, "sdq-");
             foreach (var grouping in groupings)
             {
                 Assert.AreEqual(2, grouping.Length);
             }
-            groupings = Toolkit.DataAccessLayer.GroupFilesByTest(files, "snap");
+            groupings = Toolkit.DataAccessLayer.GroupFilesByTest(files, "snap-");
             foreach (var grouping in groupings)
             {
                 Assert.AreEqual(2, grouping.Length);
@@ -80,7 +80,7 @@ namespace Testing
         public void TestSdqExecutionProcessing()
         {
             string[] files = Toolkit.DataAccessLayer.AllFiles(TestingSDQ.GetDirectory());
-            string[][] groupings = Toolkit.DataAccessLayer.GroupFilesByTest(files, "sdq");
+            string[][] groupings = Toolkit.DataAccessLayer.GroupFilesByTest(files, "sdq-");
             int[] expectedAnswers = new int[] { 17, 4, 9, 3, 6, 0 };
             int[] expectedBehaviours = new int[] { 1, 0, 2, 0, 2, 2 };
             foreach (var grouping in groupings)

@@ -64,14 +64,18 @@ namespace Toolkit
             foreach (var file in files)
             {
                 var subject = file.Split('_')[0];
-                var test = file.Split('_')[1];
-                if (test.StartsWith(testType))
+                var parts = file.Split('_');
+                if (parts.Length > 1)
                 {
-                    if (!groupings.ContainsKey(subject))
+                    var test = parts[1];
+                    if (test.StartsWith(testType))
                     {
-                        groupings[subject] = new List<string>();
+                        if (!groupings.ContainsKey(subject))
+                        {
+                            groupings[subject] = new List<string>();
+                        }
+                        groupings[subject].Add(file);
                     }
-                    groupings[subject].Add(file);
                 }
             }
 
