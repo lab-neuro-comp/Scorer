@@ -16,7 +16,7 @@ namespace Testing
         {
             string directory = TestingSDQ.GetDirectory();
             string[] files = Toolkit.DataAccessLayer.AllFiles(directory);
-            Assert.AreEqual(6, files.Length);
+            Assert.AreEqual(8, files.Length);
         }
 
         [Test]
@@ -102,6 +102,22 @@ namespace Testing
                     Assert.AreEqual(expectedAnswers[i], givenAnswers[i]);
                     Assert.AreEqual(expectedBehaviours[i], resultingBehaviours[i]);
                 }
+            }
+        }
+
+        [Test]
+        public void TestGenerationOfOutputTableName()
+        {
+            string[] files = Toolkit.DataAccessLayer.AllFiles(TestingSDQ.GetDirectory());
+            string[][] groupings = Toolkit.DataAccessLayer.GroupFilesByTest(files, "sdq-");
+            string[] expectedResults = new string[] { "Teste2_sdq.csv", "Teste_sdq.csv" };
+            for (int i = 0; i < groupings.Length; ++i)
+            {
+                var grouping = groupings[i];
+                string completeOutputFileName = Toolkit.Prettifier.GenerateOutput(grouping);
+                string[] outputFileNameParts = completeOutputFileName.Split('\\');
+                string outputFileName = outputFileNameParts[outputFileNameParts.Length-1];
+                Assert.AreEqual(expectedResults[i], outputFileName);
             }
         }
     }

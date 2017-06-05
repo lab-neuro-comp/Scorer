@@ -50,7 +50,17 @@ namespace Toolkit
         }
 
         /// <summary>
-        /// Groups a list of files into similar test executions.
+        /// Saves data in a file.
+        /// </summary>
+        /// <param name="filename">Where to be saved</param>
+        /// <param name="data">What to be saved</param>
+        public static void SaveFile(string filename, string data)
+        {
+            File.WriteAllText(filename, data);
+        }
+
+        /// <summary>
+        /// Groups a list of files into similar test executions from the same subject.
         /// </summary>
         /// <param name="testType">The test to look for.</param>
         /// <returns>An array as each item is an array of the test executions

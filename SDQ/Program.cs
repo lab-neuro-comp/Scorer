@@ -31,7 +31,9 @@ namespace SDQ
                 // Generating output table
                 var givenAnswers = evaluator.GroupAnswers();
                 var resultingBehaviours = evaluator.Calculate();
-                // TODO Generate output table
+                var output = Toolkit.Prettifier.GenerateOutput(group);
+                var data = Toolkit.Prettifier.MakeSdqLegible(givenAnswers, resultingBehaviours);
+                Toolkit.DataAccessLayer.SaveFile(output, data);
 
                 // Logging
                 Console.WriteLine($"{group[0].Split('_')[0]}:");
