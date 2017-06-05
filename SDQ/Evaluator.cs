@@ -1,4 +1,6 @@
-﻿using System.Linq;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace SDQ
 {
@@ -50,6 +52,134 @@ namespace SDQ
             Read(part1);
             Part2Answers = ExtractAnswers(part2);
         }
+
+        /// <summary>
+        /// Calculates the results for the test execution. Can only be called after reading the
+        /// data, else it will throw a `System.InvalidOperationException`.
+        /// </summary>
+        /// <returns>An array coding the result in each category. 0 means it is a normal result,
+        /// 1 means it is a limiting result, and 2 means it is an anormal result. They follow
+        /// this order: total dificulties, emotional symptoms, behaviour problems, hyperactivity,
+        /// relationship problems and pro-social behaviour.</returns>
+        public int[] Calculate()
+        {
+            int[] groupsOfAnswers = this.GroupAnswers();
+            List<int> results = new List<int>();
+
+            // Total results
+            int total = groupsOfAnswers[0];
+            if (total >= 0 && total <= 15)
+            {
+                results.Add(0);
+            }
+            else if (total >= 16 && total <= 19)
+            {
+                results.Add(1);
+            }
+            else
+            {
+                results.Add(2);
+            }
+            // Emotional symptoms
+            total = groupsOfAnswers[1];
+            if (total >= 0 && total <= 5)
+            {
+                results.Add(0);
+            }
+            else if (total >= 6 && total <= 6)
+            {
+                results.Add(1);
+            }
+            else
+            {
+                results.Add(2);
+            }
+            // Behaviour problems
+            total = groupsOfAnswers[2];
+            if (total >= 0 && total <= 3)
+            {
+                results.Add(0);
+            }
+            else if (total >= 4 && total <= 4)
+            {
+                results.Add(1);
+            }
+            else
+            {
+                results.Add(2);
+            }
+            // Hyperactivity
+            total = groupsOfAnswers[3];
+            if (total >= 0 && total <= 5)
+            {
+                results.Add(0);
+            }
+            else if (total >= 6 && total <= 9)
+            {
+                results.Add(1);
+            }
+            else
+            {
+                results.Add(2);
+            }
+            // Relationship problems
+            total = groupsOfAnswers[4];
+            if (total >= 0 && total <= 3)
+            {
+                results.Add(0);
+            }
+            else if (total >= 4 && total <= 5)
+            {
+                results.Add(1);
+            }
+            else
+            {
+                results.Add(2);
+            }
+            // Prosocial behaviour
+            total = groupsOfAnswers[0];
+            if (total >= 6 && total <= 10)
+            {
+                results.Add(0);
+            }
+            else if (total >= 5 && total <= 5)
+            {
+                results.Add(1);
+            }
+            else
+            {
+                results.Add(2);
+            }
+
+            return results.ToArray();
+        }
+
+        /// <summary>
+        /// Groups the given answers into their own categories, as expected by the test. Throws a
+        /// `System.InvalidOperationException` if the evaluator has not read the data yet or if
+        /// the data is in wrong conditions.
+        /// </summary>
+        /// <returns>An array coding the result in each category. They follow this order: total 
+        /// dificulties, emotional symptoms, behaviour problems, hyperactivity, relationship 
+        /// problems and pro-social behaviour.</returns>
+        public int[] GroupAnswers()
+        {
+            if ((Part1Answers == null) || (Part1Answers.Length != 25))
+                throw new System.InvalidOperationException();
+            var total = Part1Answers.Take(20).ToArray();
+            var emo = new int[] { Part1Answers[2], Part1Answers[7], Part1Answers[12],
+                                  Part1Answers[15], Part1Answers[23] };
+            var beh = new int[] { Part1Answers[4], Part1Answers[6], Part1Answers[11],
+                                  Part1Answers[17], Part1Answers[21] };
+            var hyp = new int[] { Part1Answers[1], Part1Answers[9], Part1Answers[14],
+                                  Part1Answers[20], Part1Answers[24] };
+            var rel = new int[] { Part1Answers[5], Part1Answers[10], Part1Answers[13],
+                                  Part1Answers[18], Part1Answers[22] };
+            var soc = new int[] { Part1Answers[0], Part1Answers[3], Part1Answers[8],
+                                  Part1Answers[16], Part1Answers[19] };
+            var outlet = new int[][] { total, emo, beh, hyp, rel, soc };
+            return outlet.Select(it => it.Sum()).ToArray();
+        }
         #endregion
 
         #region Properties
@@ -60,7 +190,7 @@ namespace SDQ
         /// <summary>
         /// The answers, as given by the subject, in the first part.
         /// </summary>
-        public int[] Part1Answers { get; private set; }
+        public int[] Part1Answers { get; private set; } = null;
         /// <summary>
         /// The answers, as given by the subject, in the second part.
         /// </summary>

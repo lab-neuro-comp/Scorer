@@ -1,4 +1,5 @@
 ﻿using NUnit.Framework;
+using System;
 
 namespace Testing
 {
@@ -7,7 +8,7 @@ namespace Testing
     {
         public static string GetDirectory()
         {
-            return @"Scorer\Data";
+            return @"C:\Users\neuro\Documents\Lab\src\github.com\lab-neuro-comp\Scorer\Data";
         }
 
         [Test]
@@ -80,16 +81,27 @@ namespace Testing
         {
             string[] files = Toolkit.DataAccessLayer.AllFiles(TestingSDQ.GetDirectory());
             string[][] groupings = Toolkit.DataAccessLayer.GroupFilesByTest(files, "sdq");
+            int[] expectedAnswers = new int[] { 17, 4, 9, 3, 6, 0 };
+            int[] expectedBehaviours = new int[] { 1, 0, 2, 0, 2, 2 };
             foreach (var grouping in groupings)
             {
                 var evaluator = new SDQ.Evaluator();
-                evaluator.Read(grouping[0]);
-                if (grouping.Length > 1)
+                // Reading data
+                var part1 = Toolkit.DataAccessLayer.LoadFile(grouping[0]);
+                var part2 = Toolkit.DataAccessLayer.LoadFile(grouping[1]);
+                Assert.Throws<System.InvalidOperationException>(() => evaluator.Calculate());
+                evaluator.Read(part1, part2);
+                Assert.AreEqual(25, evaluator.Part1Answers.Length);
+                Assert.AreEqual(7, evaluator.Part2Answers.Length);
+
+                // Evaluating test execution
+                var givenAnswers = evaluator.GroupAnswers();
+                var resultingBehaviours = evaluator.Calculate();
+                for (int i = 0; i < resultingBehaviours.Length; ++i)
                 {
-                    evaluator.Read(grouping[1]);
+                    Assert.AreEqual(expectedAnswers[i], givenAnswers[i]);
+                    Assert.AreEqual(expectedBehaviours[i], resultingBehaviours[i]);
                 }
-                // TODO Evaluate test execution to provide a test case here
-                Assert.IsTrue(false);
             }
         }
     }
