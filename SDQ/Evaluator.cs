@@ -4,6 +4,10 @@ using System.Linq;
 
 namespace SDQ
 {
+    /// <summary>
+    /// Evaluates SDQ tests' executions. Expects the data to be read when given to it.
+    /// Therefore, feed it with love <3
+    /// </summary>
     public class Evaluator
     {
         #region Constructor

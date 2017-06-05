@@ -3,6 +3,9 @@ using System.IO;
 
 namespace Toolkit
 {
+    /// <summary>
+    /// Provides utilities for dealing with the filesystem.
+    /// </summary>
     public class DataAccessLayer
     {
         /// <summary>

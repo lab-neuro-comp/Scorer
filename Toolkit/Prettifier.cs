@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace Toolkit
 {
+    /// <summary>
+    /// Makes data readable to humans. Excels at creating tables.
+    /// </summary>
     public class Prettifier
     {
         /// <summary>
@@ -19,6 +22,12 @@ namespace Toolkit
             return $"{parts[0]}_{parts[1].Split('-')[0]}.csv";
         }
 
+        /// <summary>
+        /// Generates the output table for the SDQ test.
+        /// </summary>
+        /// <param name="answers">The sum of the answers for each category.</param>
+        /// <param name="behaviours">The coded result for each behaviour.</param>
+        /// <returns>A TSV table.</returns>
         public static string MakeSdqLegible(int[] answers, int[] behaviours)
         {
             Queue<string> lines = new Queue<string>();
@@ -41,5 +50,7 @@ namespace Toolkit
 
             return lines.Aggregate("", (box, it) => $"{box}{it}\n");
         }
+
+        // TODO Make SNAP output test legible
     }
 }
