@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SDQ
 {
@@ -39,8 +36,6 @@ namespace SDQ
                 Console.WriteLine($"{group[0].Split('_')[0]}:");
                 Console.WriteLine(resultingBehaviours.Aggregate("", (box, it) => $"{box}- {it}\n"));
             }
-
-            Console.ReadLine();
         }
     }
 }
