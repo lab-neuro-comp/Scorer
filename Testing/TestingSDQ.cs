@@ -12,14 +12,6 @@ namespace Testing
         }
 
         [Test]
-        public void TestToGetAllFilesInValidDirectory()
-        {
-            string directory = TestingSDQ.GetDirectory();
-            string[] files = Toolkit.DataAccessLayer.AllFiles(directory);
-            Assert.AreEqual(8, files.Length);
-        }
-
-        [Test]
         public void TestIfStringEndingMatchingWorks()
         {
             var sdqEnding = "sdq-1.csv";
