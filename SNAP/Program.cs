@@ -16,14 +16,24 @@ namespace SNAP
 
             foreach (var group in snapOnly)
             {
+                // Reading data
                 var evaluator = new Evaluator();
+                var text1 = Toolkit.DataAccessLayer.LoadFile(group[0]);
+                var text2 = Toolkit.DataAccessLayer.LoadFile(group[1]);
+                var output = Toolkit.Prettifier.GenerateOutput(group);
+                evaluator.Read(text1, text2);
+                evaluator.Evaluate();
 
-                // TODO Read data
-                // TODO Process data
-                // TODO Log info
+                // Writting data
+                var data = new bool[]
+                {
+                    evaluator.IsImpulsive,
+                    evaluator.IsInattentive,
+                    evaluator.IsValid
+                };
+                var content = Toolkit.Prettifier.MakeSnapLegible(data);
+                Toolkit.DataAccessLayer.SaveFile(output, content);
             }
-
-            Console.ReadLine();
         }
     }
 }

@@ -51,6 +51,30 @@ namespace Toolkit
             return lines.Aggregate("", (box, it) => $"{box}{it}\n");
         }
 
-        // TODO Make SNAP output test legible
+        /// <summary>
+        /// Generates the output table for the SNAP test
+        /// </summary>
+        /// <param name="results">A boolean array, indicating, in this order, if the child
+        /// has innatentive ADHD, impulsive ADHD and if the test is conclusive or not. </param>
+        /// <returns>A TSV tables</returns>
+        public static string MakeSnapLegible(bool[] results)
+        {
+            Queue<string> lines = new Queue<string>();
+            int limit = results.Length;
+            string[] tags = new string[]
+            {
+                "INATENTO",
+                "HIPERATIVO/IMPULSIVO",
+                "TESTE CONCLUSIVO?"
+            };
+
+            for (int i = 0; i < limit; ++i)
+            {
+                string result = (results[i])? "SIM" : "NÃO" ;
+                lines.Enqueue($"{tags[i]}\t{result}");
+            }
+
+            return lines.Aggregate("", (box, it) => $"{box}{it}\n");
+        }
     }
 }

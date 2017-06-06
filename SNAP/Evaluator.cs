@@ -58,6 +58,8 @@ namespace SNAP
             IsImpulsive = Part1Answers.Skip(10).Where(it => it >= 2).Count() >= 6;
             IsValid = (!IsInattentive && !IsImpulsive) ? true : Part2Answers.Sum() == Part2Answers.Last();
         }
+
+        // TODO Generate output table
         #endregion
 
         #region Properties
