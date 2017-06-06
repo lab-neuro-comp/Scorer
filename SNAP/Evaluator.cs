@@ -56,6 +56,7 @@ namespace SNAP
             // Proceeding with evaluation
             IsInattentive = Part1Answers.Take(10).Where(it => it >= 2).Count() >= 6;
             IsImpulsive = Part1Answers.Skip(10).Where(it => it >= 2).Count() >= 6;
+            IsValid = (!IsInattentive && !IsImpulsive) ? true : Part2Answers.Sum() == Part2Answers.Last();
         }
         #endregion
 
@@ -82,10 +83,10 @@ namespace SNAP
             }
             private set
             {
-                _IsInattentive_ = (byte) ((value) ? 1 : -1);
+                _IsInattentive_ = (value) ? 1 : -1;
             }
         }
-        private byte _IsInattentive_ { get; set; } = 0;
+        private int _IsInattentive_ { get; set; } = 0;
         /// <summary>
         /// Tells if the evaluator assessed if the child experiences predominantly impulsive ADHD.
         /// </summary>
@@ -100,14 +101,32 @@ namespace SNAP
             }
             private set
             {
-                _IsImpulsive_ = (byte)((value) ? 1 : -1);
+                _IsImpulsive_ = (value) ? 1 : -1;
             }
         }
-        private byte _IsImpulsive_ { get; set; } = 0;
+        private int _IsImpulsive_ { get; set; } = 0;
         /// <summary>
-        /// Tells if the evaluator assessed if the child experiences predomnantly combined ADHD.
+        /// Tells if the evaluator assessed if the child experiences combined ADHD.
         /// </summary>
         public bool IsCombined { get { return IsImpulsive && IsInattentive; } }
+        /// <summary>
+        /// States if a test execution was valid or not if the subject is considered ADHD.
+        /// </summary>
+        public bool IsValid
+        {
+            get
+            {
+                if (_IsValid_ == 0)
+                    throw new InvalidOperationException();
+                else
+                    return _IsValid_ > 0;
+            }
+            private set
+            {
+                _IsValid_ = (value) ? 1 : -1;
+            }
+        }
+        private int _IsValid_ { get; set; } = 0;
         #endregion
     }
 }

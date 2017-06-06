@@ -97,5 +97,7 @@ namespace Testing
                 Assert.IsFalse(evaluator.IsValid);
             }
         }
+
+        // TODO Test full evaluation
     }
 }
