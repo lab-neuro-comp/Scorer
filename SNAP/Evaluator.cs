@@ -19,6 +19,7 @@ namespace SNAP
 
         }
 
+        #region Methods
         /// <summary>
         /// Translates the contens in the SNAP output files into results,
         /// stored in the `Part1Answers` and `Part2Answers` properties.
@@ -42,6 +43,24 @@ namespace SNAP
         }
 
         /// <summary>
+        /// Analyzes the given results.
+        /// </summary>
+        public void Evaluate()
+        {
+            // Checking if state is valid
+            if (Part1Answers == null)
+            {
+                throw new InvalidOperationException();
+            }
+
+            // Proceeding with evaluation
+            IsInattentive = Part1Answers.Take(10).Where(it => it >= 2).Count() >= 6;
+            IsImpulsive = Part1Answers.Skip(10).Where(it => it >= 2).Count() >= 6;
+        }
+        #endregion
+
+        #region Properties
+        /// <summary>
         /// Stores the answers in the first part of the test.
         /// </summary>
         public int[] Part1Answers { get; private set; } = null;
@@ -49,5 +68,46 @@ namespace SNAP
         /// Stores the answers in the second part of the test.
         /// </summary>
         public int[] Part2Answers { get; private set; } = null;
+        /// <summary>
+        /// Tells if the evaluator assessed if the child experiences predominantly inattentive ADHD.
+        /// </summary>
+        public bool IsInattentive
+        {
+            get
+            {
+                if (_IsInattentive_ == 0)
+                    throw new InvalidOperationException();
+                else
+                    return _IsInattentive_ > 0;
+            }
+            private set
+            {
+                _IsInattentive_ = (byte) ((value) ? 1 : -1);
+            }
+        }
+        private byte _IsInattentive_ { get; set; } = 0;
+        /// <summary>
+        /// Tells if the evaluator assessed if the child experiences predominantly impulsive ADHD.
+        /// </summary>
+        public bool IsImpulsive
+        {
+            get
+            {
+                if (_IsInattentive_ == 0)
+                    throw new InvalidOperationException();
+                else
+                    return _IsInattentive_ > 0;
+            }
+            private set
+            {
+                _IsImpulsive_ = (byte)((value) ? 1 : -1);
+            }
+        }
+        private byte _IsImpulsive_ { get; set; } = 0;
+        /// <summary>
+        /// Tells if the evaluator assessed if the child experiences predomnantly combined ADHD.
+        /// </summary>
+        public bool IsCombined { get { return IsImpulsive && IsInattentive; } }
+        #endregion
     }
 }
