@@ -14,10 +14,8 @@ namespace Testing
         [Test]
         public void TestIfStringEndingMatchingWorks()
         {
-            var sdqEnding = "sdq-1.csv";
-            string[] files = Toolkit.DataAccessLayer.AllFiles(TestingSDQ.GetDirectory());
-            Assert.IsTrue(Toolkit.DataAccessLayer.HaveSameEndings(sdqEnding, files[1]));
-            Assert.IsTrue(Toolkit.DataAccessLayer.HaveSameEndings(files[1], sdqEnding));
+            Assert.IsTrue(Toolkit.DataAccessLayer.HaveSameEndings("joe frank", "frank"));
+            Assert.IsTrue(Toolkit.DataAccessLayer.HaveSameEndings("frank", "joe frank"));
         }
         
         [Test]

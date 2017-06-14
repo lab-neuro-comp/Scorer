@@ -19,6 +19,16 @@ namespace Toolkit
         }
 
         /// <summary>
+        /// Get all the directories in a source directory. Does not check inside subdirectories.
+        /// </summary>
+        /// <param name="src">The directory to get the children directories.</param>
+        /// <returns>An array of directories</returns>
+        public static string[] AllDirs(string src)
+        {
+            return Directory.GetDirectories(src);
+        }
+
+        /// <summary>
         /// Check if a string is the end of the other. Order does not matter here.
         /// </summary>
         /// <param name="s">First string</param>
