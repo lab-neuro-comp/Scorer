@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 
 namespace Toolkit
 {
@@ -86,11 +87,17 @@ namespace Toolkit
             // Populating groupings by subject
             foreach (var file in files)
             {
-                var subject = file.Split('_')[0];
                 var parts = file.Split('_');
+                var subject = parts[0];
+                var test = parts[parts.Length-1];
+
+                if (parts.Length > 2)
+                {
+                    subject = Join("_", RemoveLast(parts));
+                }
+                
                 if (parts.Length > 1)
                 {
-                    var test = parts[1];
                     if (test.StartsWith(testType))
                     {
                         if (!groupings.ContainsKey(subject))
@@ -109,6 +116,27 @@ namespace Toolkit
             }
 
             return outlet.ToArray();
+        }
+
+        /// <summary>
+        /// Joins an array of strings with a filler string between them.
+        /// </summary>
+        /// <param name="filler">The string to go between each item of the array.</param>
+        /// <param name="stuff">The strings to be joined.</param>
+        /// <returns>The promised string.</returns>
+        public static string Join(string filler, string[] stuff)
+        {
+            return (stuff.Length == 1)? 
+                stuff[0] : 
+                stuff.Skip(1).Aggregate(stuff.First(), (box, it) => $"{box}{filler}{it}");
+        }
+
+        /// <summary>
+        /// Removes the last element of an string array.
+        /// </summary>
+        public static string[] RemoveLast(string[] inlet)
+        {
+            return inlet.Reverse().Skip(1).Reverse().ToArray();
         }
     }
 }
