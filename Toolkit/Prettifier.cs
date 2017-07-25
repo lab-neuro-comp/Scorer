@@ -19,7 +19,15 @@ namespace Toolkit
         public static string GenerateOutput(string[] grouping)
         {
             var parts = grouping[0].Split('_');
-            return $"{parts[0]}_{parts[1].Split('-')[0]}.csv";
+            var subject = parts[0];
+            var test = parts[parts.Length - 1];
+
+            if (parts.Length > 2)
+            {
+                subject = DataAccessLayer.Join("_", DataAccessLayer.RemoveLast(parts));
+            }
+
+            return $"{subject}_{test.Split('-')[0]}.csv";
         }
 
         /// <summary>
